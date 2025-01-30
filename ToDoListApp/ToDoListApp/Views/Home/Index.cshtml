@@ -1,0 +1,139 @@
+﻿@{
+	ViewData["Title"] = "Home Page";
+}
+
+@model List<ToDoListApp.Models.DoListDb>
+
+<div class="text-center">
+	<h1 class="display-4">Welcome @User.Identity.Name @ViewBag.Error </h1>
+
+	<div class="container-fluid mt-5 p-5">
+		<div class="row d-flex justify-content-center align-items-center">
+			
+			<div class="col-5 bg rounded-3">
+				
+				<h2 class="text-white fs-1">To Do List</h2>
+
+
+				<form class="d-flex flex-column gap-3" asp-action="AddToDo" method="post">
+					<div class="d-flex">
+						<input class="form-control mx-auto me-3 ms-3" type="text" name="Container" placeholder="To Do List..." aria-label="Search" required />
+						<button class="btn rounded-5" name="action" value="add" asp-action="AddTolist" asp-controller="Home" type="submit">
+							<i class="fa-solid fa-plus"></i>
+						</button>
+					</div>
+				</form>
+
+				<form asp-action="ChangeState" method="post">
+					<div class="d-flex justify-content-center align-items-center position-relative">
+						<h3 class="text-white fs-3 mt-5">My List</h3>
+						<div class="position-absolute end-0 mt-5 statemenu">
+							<input type="hidden" name="stateId" class="form-control w-25" id="idState" />
+							<button type="submit" name="action" value="warning"><i class="fa-solid fa-circle cember text-warning"></i></button>
+							<button type="submit" name="action" value="danger"><i class="fa-solid fa-circle cember text-danger"></i></button>
+							<button type="submit" name="action" value="success"><i class="fa-solid fa-circle cember text-success"></i></button>
+
+
+						</div>
+
+					</div>
+
+				</form>
+
+
+				@foreach (var item in Model)
+				{
+					<div class="rounded-3 bg-white p-2 d-flex justify-content-between align-items-center mb-1">
+						<span class="text-start text-break w-100" id="secretspan_@item.id">@item.Container</span>
+
+						<div class="d-flex gap-1">
+
+
+							<form asp-action="EditandSave" method="post" class="d-flex align-items-center gap-1">
+								<input type="hidden" name="itemId" id="itemId_@item.id" value="@item.id" />
+
+
+								<input type="hidden" class="form-control w-100 inp" name="newContainer" id="newInput_@item.id" />
+								@* İKİ İNPUTUN DA id'si her birine özel olmak zorunda*@
+
+
+								@if (item.durum == 0) // belirtilmemiş
+								{
+
+									<a class="mt-2">
+										<i class="fa-solid fa-circle daire" style="color:black;"></i>
+									</a>
+								}
+								else if (item.durum == 1) // warning 1
+								{
+									<a class="mt-2 "><i class="fa-solid fa-circle daire text-warning"></i></a>
+								}
+								else if (item.durum == 2) // danger 2
+								{
+									<a class="mt-2"><i class="fa-solid fa-circle daire text-danger"></i></a>
+								}
+								else if (item.durum == 3) // success 3
+								{
+									<a class="mt-2"><i class="fa-solid fa-circle daire text-success"></i></a>
+								}
+
+
+
+
+
+
+								<button class="btn rounded-5 edit-btn" name="action" value="edit" type="button" data-id="@item.id">
+									<i class="fa-solid fa-pen text-primary"></i>
+								</button>
+
+
+
+								<button class="btn rounded-5 edit-btn" name="action" value="save" type="submit">
+									<i class="fa-solid fa-save text-primary"></i>
+								</button>
+
+								<button class="btn rounded-5 delete-btn" name="action" value="delete" type="submit" data-id="@item.id">
+									<i class="fa-solid fa-trash text-danger"></i>
+								</button>
+
+
+							</form>
+
+
+
+						</div>
+					</div>
+				}
+
+
+
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
+<script>
+		function setItemId(itemId) {
+		document.getElementById('itemId_' + itemId).value = itemId;
+	}
+</script>
+
+
+@*
+	döngüye alıncak kısım 
+		<div class="rounded-3 bg-white p-2 d-flex justify-content-between align-items-center my-3">
+						<span class="text-start text-break w-75">Sol kısım</span>
+						<div class="d-flex gap-3">
+							<button class="btn rounded-5" name="action" value="edit" type="button"><i class="fa-solid fa-pen text-primary"></i></button>
+							<button class="btn rounded-5" name="action" value="delete" type="button"><i class="fa-solid fa-trash text-danger"></i></button>
+						</div>
+					</div>
+
+
+
+*@

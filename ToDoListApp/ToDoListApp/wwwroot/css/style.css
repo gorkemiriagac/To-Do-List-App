@@ -1,0 +1,46 @@
+﻿body {
+   
+}
+
+.bg {
+    background-color: #800080;
+}
+
+
+.btn{
+    background-color:white;
+    color:black;
+}
+
+.btn:focus,
+.btn:hover{
+    background-color:black;
+    color:white;
+}
+
+.cember,
+.daire{
+    background-color:transparent;
+    font-size:1.3rem;
+    margin-left:5px;
+    cursor:pointer;
+}
+button{
+    border:none;
+    background:none;
+}
+
+.statemenu{
+    display:none;
+}
+
+.inp{
+    width:352px !important;
+}
+
+/*
+    input[id^="newInput_"] {
+    
+    width: 100% !important;
+}
+*/
